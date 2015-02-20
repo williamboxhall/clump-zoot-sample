@@ -11,18 +11,22 @@ object Everything extends Build {
     base = file("api"),
     settings = Seq(
       libraryDependencies ++= Seq(
-        "com.twitter" %% "finagle-http" % "6.22.0",
         "net.fwbrasil" %% "zoot-finagle" % "1.0-RC2")
     )
   )
+
+  lazy val presentation = Project(
+    id = "presentation",
+    base = file("presentation"),
+    settings = Seq(
+      mainClass in Compile := Some("org.example.clumpzootsample.Presentation")
+    )++SbtStartScript.startScriptForClassesSettings
+  ).dependsOn(api)
 
   lazy val tracks = Project(
     id = "tracks",
     base = file("tracks"),
     settings = Seq(
-      libraryDependencies ++= Seq(
-        "com.twitter" %% "finagle-http" % "6.22.0",
-        "net.fwbrasil" %% "zoot-finagle" % "1.0-RC2"),
       mainClass in Compile := Some("org.example.clumpzootsample.Tracks")
     )++SbtStartScript.startScriptForClassesSettings
   ).dependsOn(api)
@@ -31,9 +35,6 @@ object Everything extends Build {
     id = "users",
     base = file("users"),
     settings = Seq(
-      libraryDependencies ++= Seq(
-        "com.twitter" %% "finagle-http" % "6.22.0",
-        "net.fwbrasil" %% "zoot-finagle" % "1.0-RC2"),
       mainClass in Compile := Some("org.example.clumpzootsample.Users")
     )++SbtStartScript.startScriptForClassesSettings
   ).dependsOn(api)
