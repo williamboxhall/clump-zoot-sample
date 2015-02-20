@@ -4,11 +4,11 @@ import com.twitter.util.Future
 import net.fwbrasil.zoot.core.Api
 import net.fwbrasil.zoot.core.request.RequestMethod._
 
-trait Tracks extends Api {
+trait EnrichedTracks extends Api {
 
   @endpoint(method = GET, path = "/:id")
-  def get(id: Long): Future[Track]
+  def get(trackId: Long): Future[EnrichedTrack]
 
 }
 
-case class Track(id: Long, creatorId: Long, title: String, duration: Int)
+case class EnrichedTrack(title: String, creator: String)

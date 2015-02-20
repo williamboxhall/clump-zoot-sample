@@ -6,9 +6,9 @@ import java.net.InetSocketAddress
 import com.twitter.finagle.builder.ServerBuilder
 import net.fwbrasil.zoot.finagle.FinagleServer
 import com.twitter.finagle.builder.ClientBuilder
-import net.fwbrasil.zoot.core.Client
+import net.fwbrasil.zoot.core.{Api, Client, Server}
 import com.twitter.finagle.http.Http
-import net.fwbrasil.zoot.core.Server
+import scala.concurrent
 import scala.concurrent.ExecutionContext.Implicits.global
 import net.fwbrasil.zoot.finagle.FinagleClient
 import scala.concurrent.Await
@@ -41,13 +41,6 @@ object Presentation extends App {
 
   println("Started Presentation service.")
 
-}
-
-case class EnrichedTrack(title: String, creator: String)
-
-trait EnrichedTracks extends Api {
-  @endpoint(method = GET, path = "/:id")
-  def get(trackId: Long): Future[EnrichedTrack]
 }
 
 class EnrichedTracksController(tracks: Tracks, users: Users) extends EnrichedTracks {
