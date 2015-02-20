@@ -1,3 +1,5 @@
 .idea
-project
 target
+tracks/target
+tracks/project/target
+tracks/project/project
