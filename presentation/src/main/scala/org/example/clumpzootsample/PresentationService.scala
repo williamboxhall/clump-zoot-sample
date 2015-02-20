@@ -2,25 +2,35 @@ package org.example.clumpzootsample
 
 import java.net.InetSocketAddress
 
-import com.twitter.finagle.builder.ServerBuilder
+import com.twitter.finagle.builder.{ClientBuilder, ServerBuilder}
 import com.twitter.finagle.http.{Http, Request, RichHttp}
-import com.twitter.util.Future
-import net.fwbrasil.zoot.core.Server
 import net.fwbrasil.zoot.core.mapper.JacksonStringMapper
-import net.fwbrasil.zoot.finagle.FinagleServer
+import net.fwbrasil.zoot.core.{Client, Server}
+import net.fwbrasil.zoot.finagle.{FinagleClient, FinagleServer}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object Presentation extends App {
+object PresentationService extends App {
 
   private implicit val mirror = scala.reflect.runtime.currentMirror
   private implicit val mapper = new JacksonStringMapper
 
-  val tracks = new Tracks {
-    override def get(id: Long): Future[Track] = ???
+  val users = {
+    val clientBuilder = ClientBuilder()
+      .codec(RichHttp[Request](Http()))
+      .hosts(s"localhost:2222")
+      .hostConnectionLimit(5)
+
+    Client[Users](FinagleClient(clientBuilder.build))
   }
-  val users = new Users {
-    override def get(id: Long): Future[User] = ???
+
+  val tracks = {
+    val clientBuilder = ClientBuilder()
+      .codec(RichHttp[Request](Http()))
+      .hosts(s"localhost:3333")
+      .hostConnectionLimit(5)
+
+    Client[Tracks](FinagleClient(clientBuilder.build))
   }
 
   val server = {

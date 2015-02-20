@@ -19,7 +19,7 @@ object Everything extends Build {
     id = "presentation",
     base = file("presentation"),
     settings = Seq(
-      mainClass in Compile := Some("org.example.clumpzootsample.Presentation")
+      mainClass in Compile := Some("org.example.clumpzootsample.PresentationService")
     )++SbtStartScript.startScriptForClassesSettings
   ).dependsOn(api)
 
@@ -27,7 +27,7 @@ object Everything extends Build {
     id = "tracks",
     base = file("tracks"),
     settings = Seq(
-      mainClass in Compile := Some("org.example.clumpzootsample.Tracks")
+      mainClass in Compile := Some("org.example.clumpzootsample.TracksService")
     )++SbtStartScript.startScriptForClassesSettings
   ).dependsOn(api)
 
@@ -35,7 +35,7 @@ object Everything extends Build {
     id = "users",
     base = file("users"),
     settings = Seq(
-      mainClass in Compile := Some("org.example.clumpzootsample.Users")
+      mainClass in Compile := Some("org.example.clumpzootsample.UsersService")
     )++SbtStartScript.startScriptForClassesSettings
   ).dependsOn(api)
 

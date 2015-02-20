@@ -1,7 +1,8 @@
 run-all: 
 	sbt startScript
-	(tracks/target/start)
-	(users/target/start)
+	tracks/target/start &
+	users/target/start &
+	presentation/target/start &
 
 clean:
 	sbt clean
@@ -10,3 +11,5 @@ clean:
 	rm -rf users/project/
 	rm -rf tracks/target/
 	rm -rf tracks/project/
+	rm -rf presentation/target/
+	rm -rf presentation/project/
