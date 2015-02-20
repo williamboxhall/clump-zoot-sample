@@ -1,23 +1,17 @@
 package org.example.clumpzootsample
 
-import com.twitter.util.Future
-import net.fwbrasil.zoot.core.mapper.JacksonStringMapper
 import java.net.InetSocketAddress
+
 import com.twitter.finagle.builder.ServerBuilder
+import com.twitter.finagle.http.{Http, Request, RichHttp}
+import com.twitter.util.Future
+import net.fwbrasil.zoot.core.Server
+import net.fwbrasil.zoot.core.mapper.JacksonStringMapper
 import net.fwbrasil.zoot.finagle.FinagleServer
-import com.twitter.finagle.builder.ClientBuilder
-import net.fwbrasil.zoot.core.{Api, Client, Server}
-import com.twitter.finagle.http.Http
-import scala.concurrent
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import net.fwbrasil.zoot.finagle.FinagleClient
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
-import com.twitter.finagle.http.RichHttp
-import com.twitter.finagle.http.Request
 
 object Presentation extends App {
-
 
   private implicit val mirror = scala.reflect.runtime.currentMirror
   private implicit val mapper = new JacksonStringMapper

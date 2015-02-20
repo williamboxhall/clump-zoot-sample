@@ -4,14 +4,14 @@ import com.typesafe.sbt.SbtStartScript
 
 object Everything extends Build {
 
-  lazy val root = Project(id = "root", base = file("."), aggregate = Seq(api, tracks, users))
+  lazy val root = Project(id = "root", base = file("."), aggregate = Seq(api, presentation, tracks, users))
 
   lazy val api = Project(
     id = "api",
     base = file("api"),
     settings = Seq(
       libraryDependencies ++= Seq(
-        "net.fwbrasil" %% "zoot-finagle" % "1.0-RC2")
+        "net.fwbrasil" %% "zoot-finagle" % "0.14")
     )
   )
 
