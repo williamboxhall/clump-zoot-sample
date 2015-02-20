@@ -1,14 +1,7 @@
-all:
-	sbt clean test startScript
+run-all: 
+	(cd tracks/; make run)
+	(cd users/; make run)
 
-build:
-	sbt clean startScript
-
-test:
-	sbt clean test
-
-clean:
-	sbt clean
-
-run: build
-	target/start
+clean-all:
+	(cd tracks/; make clean)
+	(cd users/; make clean)

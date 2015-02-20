@@ -1,8 +1,8 @@
-package net.fwbrasil.zoot.sample.counter
+package org.example.clumpzootsample
 
-import net.fwbrasil.zoot.core.endpoint
 import net.fwbrasil.zoot.core.Api
 import net.fwbrasil.zoot.core.request.RequestMethod._
+
 import scala.concurrent.Future
 
 trait CounterApi extends Api {
