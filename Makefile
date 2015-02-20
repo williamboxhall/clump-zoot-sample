@@ -1,7 +1,12 @@
 run-all: 
-	(cd tracks/; make run)
-	(cd users/; make run)
+	sbt startScript
+	(tracks/target/start)
+	(users/target/start)
 
-clean-all:
-	(cd tracks/; make clean)
-	(cd users/; make clean)
+clean:
+	sbt clean
+	rm -rf target/
+	rm -rf users/target/
+	rm -rf users/project/
+	rm -rf tracks/target/
+	rm -rf tracks/project/
