@@ -15,6 +15,12 @@ class EnrichedTracksController(tracks: Tracks, users: Users) extends EnrichedTra
   } yield {
     EnrichedTrack(track.title, s"${user.firstName} ${user.lastName}")
   }
+
+  override def list(trackIds: List[Long]) = {
+    tracks.list(trackIds).map(_.map{ track =>
+      EnrichedTrack(track.title, "not found")
+    })
+  }
 }
 
 

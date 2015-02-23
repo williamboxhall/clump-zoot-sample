@@ -8,6 +8,10 @@ object TracksService extends App {
 }
 
 class TracksController extends Tracks {
-  override def get(id: Long) = Future.value(Track(id, id * 10, s"song$id"))
+  override def get(trackId: Long) = Future.value(trackFor(trackId))
+
+  override def list(trackIds: List[Long]) = Future.value(trackIds.map(trackFor))
+
+  private def trackFor(trackId: Long) = Track(trackId, trackId * 10, s"song$trackId")
 }
 
