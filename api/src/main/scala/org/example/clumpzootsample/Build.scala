@@ -25,10 +25,10 @@ object Build {
     server
   }
 
-  def clientFor[T <: Api: Manifest](port: Int) = {
+  def clientFor[T <: Api: Manifest](host: String, port: Int) = {
     val clientBuilder = ClientBuilder()
       .codec(RichHttp[Request](Http()))
-      .hosts(s"localhost:$port")
+      .hosts(s"$host:$port")
       .hostConnectionLimit(5)
     Client[T](FinagleClient(clientBuilder.build))
   }

@@ -3,8 +3,8 @@ package org.example.clumpzootsample
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object PresentationService extends App {
-  val users = Build.clientFor[Users](2222)
-  val tracks = Build.clientFor[Tracks](3333)
+  val users = Build.clientFor[Users]("localhost", 2222)
+  val tracks = Build.clientFor[Tracks]("localhost", 3333)
   Build.serverFor[EnrichedTracks]("EnrichedTracks", 1111, new EnrichedTracksController(tracks, users))
 }
 
