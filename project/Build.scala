@@ -19,7 +19,8 @@ object Everything extends Build {
     id = "presentation",
     base = file("presentation"),
     settings = Seq(
-      mainClass in Compile := Some("org.example.clumpzootsample.PresentationService")
+      mainClass in Compile := Some("org.example.clumpzootsample.PresentationService"),
+      libraryDependencies ++= Seq("io.getclump" %% "clump" % "0.0.9")
     )++SbtStartScript.startScriptForClassesSettings
   ).dependsOn(api)
 

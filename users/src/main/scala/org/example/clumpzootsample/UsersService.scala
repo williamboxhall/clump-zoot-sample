@@ -8,6 +8,10 @@ object UsersService extends App {
 }
 
 class UsersController extends Users {
-  override def get(id: Long) = Future.value(User(id, s"first$id", s"last$id"))
+  override def get(userId: Long) = Future.value(userFor(userId))
+
+  override def list(userIds: Set[Long]) = Future.value(userIds.map(userFor))
+
+  private def userFor(trackId: Long): User = User(trackId, s"first$trackId", s"last$trackId")
 }
 

@@ -8,8 +8,10 @@ import scala.concurrent.Future
 trait Users extends Api {
 
   @endpoint(method = GET, path = "/users/:id")
-  def get(id: Long): Future[User]
+  def get(userId: Long): Future[User]
 
+  @endpoint(method = GET, path = "/users")
+  def list(userIds: Set[Long]): Future[Set[User]]
 }
 
 case class User(id: Long, firstName: String, lastName: String)

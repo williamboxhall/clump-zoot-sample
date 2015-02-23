@@ -8,7 +8,7 @@ import scala.concurrent.Future
 trait EnrichedTracks extends Api {
 
   @endpoint(method = GET, path = "/enrichedtracks/:trackId")
-  def get(trackId: Long): Future[EnrichedTrack]
+  def get(trackId: Long): Future[Option[EnrichedTrack]]
 
   @endpoint(method = GET, path = "/enrichedtracks")
   def list(trackIds: List[Long]): Future[List[EnrichedTrack]]
