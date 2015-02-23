@@ -15,25 +15,18 @@ object PresentationService extends App {
 }
 
 class EnrichedTracksController(tracks: ClumpSource[Long, Track], users: ClumpSource[Long, User]) extends EnrichedTracks {
-  override def get(trackId: Long) = {
-    (for {
-      track <- tracks.get(trackId)
-      user <- users.get(track.creatorId)
-    } yield {
-      EnrichedTrack(track.title, s"${user.firstName} ${user.lastName}")
-    }).get
-  }
+  override def get(trackId: Long) = enrichedTrack(trackId).get
 
   override def list(trackIds: List[Long]) = {
-    val result: Future[List[EnrichedTrack]] = Clump.traverse(trackIds) { trackId =>
-      for {
-        track <- tracks.get(trackId)
-        user <- users.get(track.creatorId)
-      } yield {
-        EnrichedTrack(track.title, s"${user.firstName} ${user.lastName}")
-      }
-    }.list
+    val result: Future[List[EnrichedTrack]] = Clump.traverse(trackIds)(enrichedTrack).list
     result
+  }
+
+  private def enrichedTrack(trackId: Long) = for {
+    track <- tracks.get(trackId)
+    user <- users.get(track.creatorId)
+  } yield {
+    EnrichedTrack(track.title, s"${user.firstName} ${user.lastName}")
   }
 }
 
