@@ -1,8 +1,13 @@
-run-all: 
+
+start-all: 
 	sbt startScript
 	tracks/target/start &
 	users/target/start &
 	presentation/target/start &
+	exit 0
+
+stop-all:
+	./killAllServices.sh
 
 clean:
 	sbt clean
@@ -13,3 +18,4 @@ clean:
 	rm -rf tracks/project/
 	rm -rf presentation/target/
 	rm -rf presentation/project/
+
