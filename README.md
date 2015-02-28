@@ -4,13 +4,13 @@
 
 This project aims to demonstrate how [Zoot](https://github.com/fwbrasil/zoot) and [Clump](https://github.com/getclump/clump) enable a developer to make a hyper-minimal microservices ecosystem.
 
-[Zoot](https://github.com/fwbrasil/zoot) is a routing and API specification framework that allows the developer to specify strongly-typed microservice interfaces to share between client and server, and hiding JSON marshalling/unmarshalling details. Zoot is compatible with different Future-based web frameworks, this example uses [Finagle](https://twitter.github.io/finagle/) which is built on top of [Netty](http://netty.io/)
+[Zoot](https://github.com/fwbrasil/zoot) is a routing and API specification framework that allows the developer to specify strongly-typed microservice interfaces to share between client and server, and hides JSON marshalling/unmarshalling details. Zoot is compatible with different Future-based web frameworks, this example uses [Finagle](https://twitter.github.io/finagle/) which is built on top of [Netty](http://netty.io/)
 
 [Clump](https://github.com/getclump/clump) is a service composition library that abstracts away the concerns of bulk-fetching, batching and retries and the code-wrangling required to do this manually.
 
 ## Running
 
-To start all 3 services running run 
+To start all 3 services:
 
 ```
 make start-all
@@ -21,10 +21,9 @@ You may then perform a REST request to fetch tracks from `EnrichedTrackService,`
 ```
 curl 'http://localhost:1111/enrichedtracks/1'
 curl 'http://localhost:1111/enrichedtracks?trackIds=\[1,2,3\]'
-
 ```
 
-To kill all 3 running services run
+To kill all 3 services:
 
 ```
 make stop-all
@@ -38,9 +37,6 @@ Together, [Zoot](https://github.com/fwbrasil/zoot) and [Clump](https://github.co
 ...
 trait Tracks extends Api {
 
-  @endpoint(method = GET, path = "/tracks/:trackId")
-  def get(trackId: Long): Future[Track]
-
   @endpoint(method = GET, path = "/tracks")
   def list(trackIds: List[Long]): Future[List[Track]]
 
@@ -53,11 +49,9 @@ object TracksService extends App {
 }
 
 class TracksController extends Tracks {
-  override def get(trackId: Long) = Future.value(trackFor(trackId))
+  override def list(trackIds: List[Long]) = Future.value(trackIds.map(track))
 
-  override def list(trackIds: List[Long]) = Future.value(trackIds.map(trackFor))
-
-  private def trackFor(trackId: Long) = Track(trackId, trackId * 10, s"song$trackId")
+  private def track(trackId: Long) = Track(trackId, trackId * 10, s"song$trackId")
 }
 ...
 
