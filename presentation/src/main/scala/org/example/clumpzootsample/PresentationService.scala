@@ -3,7 +3,7 @@ package org.example.clumpzootsample
 import com.twitter.util.Future
 import io.getclump.{ClumpSource, Clump}
 import net.fwbrasil.zoot.finagle.FutureBridge._
-import org.example.clumpzootsample.Filters.requestLogFilter
+import org.example.clumpzootsample.Filters.{exceptionLogFilter, requestLogFilter}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -12,7 +12,8 @@ object PresentationService extends App {
   val usersService = Create.clientFor[Users]("localhost", 2222)
   val tracks = Clump.source(tracksService.list)(_.id)
   val users = Clump.source(usersService.list)(_.id)
-  Create.serverFor[EnrichedTracks]("EnrichedTracks", 1111, new EnrichedTracksController(tracks, users), requestLogFilter)
+  Create.serverFor[EnrichedTracks]("EnrichedTracks", 1111, new EnrichedTracksController(tracks, users),
+    requestLogFilter, exceptionLogFilter)
 }
 
 class EnrichedTracksController(tracks: ClumpSource[Long, Track], users: ClumpSource[Long, User]) extends EnrichedTracks {
@@ -27,6 +28,7 @@ class EnrichedTracksController(tracks: ClumpSource[Long, Track], users: ClumpSou
     track <- tracks.get(trackId)
     user <- users.get(track.creatorId)
   } yield {
+    throw new RuntimeException("Expected")
     EnrichedTrack(track.title, s"${user.firstName} ${user.lastName}")
   }
 }
