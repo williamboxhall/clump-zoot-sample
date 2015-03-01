@@ -3,15 +3,16 @@ package org.example.clumpzootsample
 import com.twitter.util.Future
 import io.getclump.{ClumpSource, Clump}
 import net.fwbrasil.zoot.finagle.FutureBridge._
+import org.example.clumpzootsample.Filters.requestLogFilter
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object PresentationService extends App {
-  val tracksService = Build.clientFor[Tracks]("localhost", 3333)
-  val usersService = Build.clientFor[Users]("localhost", 2222)
+  val tracksService = Create.clientFor[Tracks]("localhost", 3333)
+  val usersService = Create.clientFor[Users]("localhost", 2222)
   val tracks = Clump.source(tracksService.list)(_.id)
   val users = Clump.source(usersService.list)(_.id)
-  Build.serverFor[EnrichedTracks]("EnrichedTracks", 1111, new EnrichedTracksController(tracks, users))
+  Create.serverFor[EnrichedTracks]("EnrichedTracks", 1111, new EnrichedTracksController(tracks, users), requestLogFilter)
 }
 
 class EnrichedTracksController(tracks: ClumpSource[Long, Track], users: ClumpSource[Long, User]) extends EnrichedTracks {

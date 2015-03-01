@@ -4,7 +4,7 @@ import com.twitter.util.Future
 import net.fwbrasil.zoot.finagle.FutureBridge._
 
 object UsersService extends App {
-  val server = Build.serverFor[Users]("Users", 2222, new UsersController)
+  val server = Create.serverFor[Users]("Users", 2222, new UsersController)
 }
 
 class UsersController extends Users {

@@ -4,7 +4,7 @@ import com.twitter.util.Future
 import net.fwbrasil.zoot.finagle.FutureBridge._
 
 object TracksService extends App {
-  Build.serverFor[Tracks]("Tracks", 3333, new TracksController)
+  Create.serverFor[Tracks]("Tracks", 3333, new TracksController)
 }
 
 class TracksController extends Tracks {
