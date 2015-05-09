@@ -23,7 +23,7 @@ object Everything extends Build {
     base = file("presentation"),
     settings = Seq(
       mainClass in Compile := Some("org.example.clumpzootsample.PresentationService"),
-      libraryDependencies ++= Seq("io.getclump" %% "clump" % "0.0.9")
+      libraryDependencies ++= Seq("io.getclump" %% "clump-scala" % "0.0.12")
     )++SbtStartScript.startScriptForClassesSettings
   ).dependsOn(api, filters)
 
